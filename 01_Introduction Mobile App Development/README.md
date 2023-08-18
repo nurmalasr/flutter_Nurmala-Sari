@@ -1,0 +1,1 @@
+    Pada hari Rabu, 16 Agustus 2023 saya melakukan pembelajaran mandiri dengan menonton video materi section Introduction Mobile App Development. Saya menyelesaikan video pembelajaran, membaca materi di google slides, mengerjakan soal pilihan ganda, quiz/essay dan rangkuman atau resume. Setelah melakukan pembelajaran mandiri asinkron, saya mengikuti Live Session.
