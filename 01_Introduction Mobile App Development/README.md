@@ -1,1 +1,12 @@
-    Pada hari Rabu, 16 Agustus 2023 saya melakukan pembelajaran mandiri dengan menonton video materi section Introduction Mobile App Development. Saya menyelesaikan video pembelajaran, membaca materi di google slides, mengerjakan soal pilihan ganda, quiz/essay dan rangkuman atau resume. Setelah melakukan pembelajaran mandiri asinkron, saya mengikuti Live Session.
+<h1>Resume Introduction Mobile App Development</h1>
+
+1. Software merupakan perangkat lunak yang tersimpan dan dikendalikan pada sistem komputer, terbentuk dari beberapa perintah dan tidak mempunyai bentuk fisik. Adapun jenis software terdiri dari :
+    - Web
+    - Dekstop
+    - Mobile
+2. Bahasa pemrograman adalah rangkaian teks untuk memberikan perintah pada komputer. 
+3. Compiler membacakan perintah lalu mengubahkan ke bahasa lain yang dikenal komputer, machine code. Lalu menghasilkan output.
+4. Interpreter membaca perintah dan langsung menjalankan perintah untuk menghasilkan output.
+5. Compiler prosesnya lebih panjang, sedangkan Interpreter lebih singkat.
+6. Aplikasi mobile ada iOS dan Android, iOS dikembangkan Apple sedangkan Android bersifat open source, lebih luas. 
+7. Tahapan mobile app dev : Bahasa pemrograman > Compiler (Android/iOS SDK) > Machine code > Machine code (.apk/.ipa) > Output.  
