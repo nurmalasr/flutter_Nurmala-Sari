@@ -19,3 +19,7 @@ Resume Basic Version Control and Branch Management
 9. Node module tidak perlu dimasukkan ke library agar tidak dapat diinstall
 
 10. Drop stash untuk menghapus stash (daftar simpanan), Pop stash simpan elemen teratas dan melepaskan dari daftar, Apply stash untuk menyimpan stash  
+
+11. Git merge untuk menyamakan revisi code dari branch ke main
+
+12. Git checkout (branch) untuk pindah branch
