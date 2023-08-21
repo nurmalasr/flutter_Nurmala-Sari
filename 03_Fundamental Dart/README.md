@@ -12,7 +12,7 @@
 
 4. Komentar sebagai dokumentasi, catatan pada kode dan mencegah perintah dijalankan. Penulisannya dengan :
     - Single line command **//**
-    - Multi line command **/*  */**
+    - Multi line command /*  */
 
 5.  Variabel seperti box yang menyimpan sebuah data atau nilai yang memiliki nama dan tipe data. Contoh : `int umur = 21;` 
     - int adalah **tipe data**
