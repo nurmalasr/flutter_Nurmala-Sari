@@ -1,4 +1,4 @@
-<h1>Resume Introduction Mobile App Development</h1>
+# Resume Introduction Mobile App Development 
 
 1. Software merupakan perangkat lunak yang tersimpan dan dikendalikan pada sistem komputer, terbentuk dari beberapa perintah dan tidak mempunyai bentuk fisik. Adapun jenis software terdiri dari :
     - Web

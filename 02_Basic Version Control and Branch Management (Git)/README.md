@@ -1,4 +1,4 @@
-Resume Basic Version Control and Branch Management
+# Resume Basic Version Control and Branch Management
 
 1. Versioning proses mengatur revisi atau perubahan dari source code program. Git merupakan salah satu VCS populer untuk developer bekerja sama mengembangkan software 
 
