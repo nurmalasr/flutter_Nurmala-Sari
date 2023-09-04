@@ -10,10 +10,11 @@ class HelloWorld extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AppBar(
-        title: AppBar(
+      home: Scaffold(
+       appBar: AppBar(
           title: const Text('Halo semua, namaku Mala!'),
         ),
+        body: Center(child: Text('material')),
     )
     );
   }

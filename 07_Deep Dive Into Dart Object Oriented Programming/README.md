@@ -69,7 +69,8 @@ void main() {
 - Bertujuan agar class memiliki method yang sama, dengan proses yang berbeda
 
 Melakukan Overriding :
-    - Dilakukan pada class yang melakukan inheritance 
+
+    - Dilakukan pada class yang melakukan inheritance
     - Method sudah ada pada class induk
     - Method ditulis ulang seperti membuat method baru pada class anak
     - Ditambahkan tanda `@override` di baris sebelum method dibuat
@@ -97,7 +98,9 @@ class Kambing extends Hewan {
     }
 }
 ```
+
 Saat menggunakan `class`, proses membuat Object dari class yang terjadi inheritance seperti pembuatan Object pada umumnya :
+
 ```dart
 void main() {
 
@@ -112,6 +115,7 @@ void main() {
 ```
 
 ## INTERFACE
+
 - Berupa `class`
 - Menunjukkan method apa aja yang ada pada suatu `class`
 - Seluruh method wajib di `@override`
@@ -132,6 +136,7 @@ class Hewan {
     }
 }
 ```
+
 ```dart
 class Kambing implements Hewan {
     @override
@@ -145,6 +150,7 @@ class Kambing implements Hewan {
 }
 }
 ```
+
 ```dart
 void main() {
 
@@ -160,6 +166,7 @@ void main() {
 ```
 
 ## ABSTRACT CLASS
+
 - Berupa class abstrak/gambaran umum
 - Dapat menurunkan semua Property & Methodnya yang dimiliki class abstract
 - Menunjukkan method apa saja yang ada pada suatu class
@@ -178,6 +185,7 @@ abstract class Hewan {
     }
 }
 ```
+
 ```dart
 class Kambing extends Hewan {
     @override
@@ -186,6 +194,7 @@ class Kambing extends Hewan {
     }
 }
 ```
+
 ```dart
 void main() {
 
@@ -195,7 +204,9 @@ void main() {
 
 }
 ```
+
 Abstract class tidak dapat digunakan untuk membentuk Object, sehingga menyebabkan error :
+
 ```dart
 void main() {
 
@@ -209,11 +220,13 @@ void main() {
 ```
 
 ## POLYMORPHISM
+
 - Kemampuan data/Object berubah menjadi bentuk lain
 - Tipe data yang dapat digunakan adalah super class
 - Dapat dilakukan pada class dengan `extends` atau `implements`
 
 Untuk melakukan Polymorphism, membuat Object dari `class` Kambing dengan tipe data `class` Hewan :
+
 ```dart
 void main() {
 
@@ -225,6 +238,7 @@ void main() {
 ```
 
 ## GENERICS
+
 - Dapat digunakan pada class atau fungsi
 - Memberi kemampuan menambahkan parameter agar dapat menerima data dengan tipe yang berbeda
 - Tipe data yang diinginkan, ditentukan saat membuat class atau menjalankan fungsi
@@ -232,7 +246,9 @@ void main() {
 Membuat class dengan generics :
     - `class` Hadiah dapat dimasukkan data dengan tipe T
     - Tipe T (type) dapat digunakan di seluruh `class` Hadiah
+
 ```dart
+
 class Hadiah<T> { // dapat diganti dengan String, boolean, dll
     var isi;
 
@@ -243,6 +259,7 @@ class Hadiah<T> { // dapat diganti dengan String, boolean, dll
 ```
 
 Menggunakan class dengan generics yaitu setelah nama class, menjadi tempat tipe data yang diinginkan :
+
 ```dart
 void main() {
 
@@ -255,11 +272,13 @@ void main() {
 ```
 
 Membuat Fungsi dengan Generics dengan cara setelah nama fungsi, menjadi tempat variabel Generics :
+
 ```dart
 void cekTipe<T>(T data) { // jadi fungsi general dmn tipe data dapat diubah-ubah
     print(data.runtimeType); // runtype untuk mengecek tipe data dari nilai yang akan dimasukkan ke dalam parameter data
 }
 ```
+
 ```dart
 void main() {
 
