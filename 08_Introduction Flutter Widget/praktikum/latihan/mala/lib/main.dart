@@ -12,9 +12,9 @@ class HelloWorld extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
        appBar: AppBar(
-          title: const Text('Halo semua, namaku Mala!'),
+          title: const Text('Flutter Demo Home Page'),
         ),
-        body: Center(child: Text('material')
+        body: Center(child: Text('You have pushed the button this many times :'),
         ), 
         drawer: Drawer(
           child: ListView(
