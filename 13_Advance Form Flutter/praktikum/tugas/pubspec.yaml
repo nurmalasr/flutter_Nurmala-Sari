@@ -1,4 +1,4 @@
-name: mala
+name: tugas
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -20,6 +20,7 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
+intl: ^0.18.1
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -35,9 +36,11 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flutter_initicon: ^3.0.0+1
-  logging: ^1.2.0
+  flutter_colorpicker: ^1.0.3
   intl: ^0.18.1
+  open_file: ^3.3.2
+  file_picker: ^5.5.0
+  flutter_initicon: ^3.0.0+1
 
 dev_dependencies:
   flutter_test:
