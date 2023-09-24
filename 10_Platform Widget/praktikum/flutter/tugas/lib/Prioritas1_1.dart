@@ -11,23 +11,21 @@ class HelloWorld extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Halo Alterra'),
+          title: const Text('Material App'),
         ),
-        body: Center(child: const Text('Nama saya adalah Nurmala Sari'),
+        body: Center(child: const Text('This is Material App'),
         ),
         drawer: Drawer(
           child: ListView(
             children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blueGrey,
-                ),
-                child: const Text('Drawer Header'),
+              ListTile(title: const Text('Home'),
               ),
-              ListTile(title: const Text('Title 1')),
-              ListTile(title: const Text('Title 2')),
+              ListTile(
+                title: const Text('Settings'),
+                ),
             ],
           ),
         ),
@@ -48,4 +46,3 @@ class HelloWorld extends StatelessWidget {
     );
   }
 }
-
