@@ -241,7 +241,7 @@ ElevatedButton(
     }
 
     // Tambahkan kontak ke dalam daftar kontak
-    addContact(name, phone);
+    addContact();
 
     // Bersihkan form field setelah data disimpan
     nameController.clear();
@@ -280,6 +280,7 @@ class Contact {
   });
 }
 
+
 class ContactList extends StatefulWidget {
   final List<Contact> contacts;
 
@@ -289,7 +290,14 @@ class ContactList extends StatefulWidget {
   _ContactListState createState() => _ContactListState();
 }
 
+
 class _ContactListState extends State<ContactList> {
+
+  void _deleteContact(Contact contact) {
+  setState(() {
+    widget.contacts.remove(contact);
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -322,6 +330,7 @@ class _ContactListState extends State<ContactList> {
               IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
+                  _deleteContact(contact);
                   print('Delete ${contact.name}');
                 },
               ),
