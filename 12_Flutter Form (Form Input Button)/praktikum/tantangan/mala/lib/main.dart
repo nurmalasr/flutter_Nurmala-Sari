@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Color(0xFF6750A4), 
+        primaryColor: Color(0xFF6750A4),
       ),
       home: ContactPage(),
     );
@@ -27,6 +27,8 @@ class _ContactPageState extends State<ContactPage> {
   List<Contact> contacts = [];
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  int _selectedIndex = -1;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +44,9 @@ class _ContactPageState extends State<ContactPage> {
             Padding(
               padding: EdgeInsets.all(16.0),
               child: Icon(
-                Icons.phone_android, 
+                Icons.phone_android,
                 size: 30.0,
-                color: Colors.grey, 
+                color: Colors.grey,
               ),
             ),
             Padding(
@@ -70,36 +72,61 @@ class _ContactPageState extends State<ContactPage> {
               indent: 16.0,
               endIndent: 16.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  labelText: "Name",
-                  hintText: "Insert Your Name",
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  filled: true,
-                  fillColor: Color(0xFFEFE4FB),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: TextFormField(
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        labelText: "Name",
+                        hintText: "Insert Your Name",
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        filled: true,
+                        fillColor: Color(0xFFEFE4FB),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Name is required';
+                        }
+                        if (!isValidName(value)) {
+                          return 'Name is not valid';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: TextFormField(
-                controller: phoneController,
-                decoration: InputDecoration(
-                  labelText: "Telephone",
-                  hintText: "+62 ...",
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  filled: true,
-                  fillColor: Color(0xFFEFE4FB),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: TextFormField(
+                      controller: phoneController,
+                      decoration: InputDecoration(
+                        labelText: "Telephone",
+                        hintText: "+62 ...",
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        filled: true,
+                        fillColor: Color(0xFFEFE4FB),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Phone number is required';
+                        }
+                        if (!isValidPhoneNumber(value)) {
+                          return 'Phone number is not valid';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
             Align(
@@ -107,11 +134,20 @@ class _ContactPageState extends State<ContactPage> {
               child: Padding(
                 padding: EdgeInsets.only(right: 16.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50.0), 
+                  borderRadius: BorderRadius.circular(50.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      addContact();
-                      printContacts();
+                      if (_formKey.currentState!.validate()) {
+                        if (_selectedIndex == -1) {
+                          // Mode tambah kontak baru
+                          addContact();
+                        } else {
+                          // Mode edit kontak
+                          editContact();
+                        }
+                        printContacts();
+                        _formKey.currentState!.reset();
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
@@ -124,7 +160,7 @@ class _ContactPageState extends State<ContactPage> {
                       ),
                     ),
                     child: Text(
-                      "Submit",
+                      _selectedIndex == -1 ? "Submit" : "Update",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -134,12 +170,26 @@ class _ContactPageState extends State<ContactPage> {
             SizedBox(height: 16),
             Text(
               "List Contacts",
-              style:TextStyle(
+              style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-              )
+              ),
             ),
-            ContactList(contacts: contacts), // Menampilkan daftar kontak
+            ContactList(
+              contacts: contacts,
+              onEdit: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                  nameController.text = contacts[index].name;
+                  phoneController.text = contacts[index].phoneNumber;
+                });
+              },
+              onDelete: (index) {
+                setState(() {
+                  contacts.removeAt(index);
+                });
+              },
+            ), // Menampilkan daftar kontak
           ],
         ),
       ),
@@ -156,10 +206,41 @@ class _ContactPageState extends State<ContactPage> {
     });
   }
 
+  void editContact() {
+    setState(() {
+      final String name = nameController.text;
+      final String phone = phoneController.text;
+      contacts[_selectedIndex] = Contact(name: name, phoneNumber: phone);
+      nameController.clear();
+      phoneController.clear();
+      _selectedIndex = -1; // Reset selectedIndex setelah edit
+    });
+  }
+
   void printContacts() {
     print(contacts.map((contact) {
       return {'title': contact.name, 'subtitle': contact.phoneNumber};
     }).toList());
+  }
+
+bool isValidName(String name) {
+  if (name.isEmpty) return false;
+  final words = name.split(' ');
+  if (words.length < 2) return false;
+  for (final word in words) {
+    if (word.isEmpty) return false;
+    if (word[0] != word[0].toUpperCase()) return false;
+    if (!word.codeUnits.every((unit) => unit >= 65 && unit <= 90 || unit >= 97 && unit <= 122)) return false;
+  }
+  return true;
+}
+
+
+  bool isValidPhoneNumber(String phoneNumber) {
+    if (phoneNumber.isEmpty) return false;
+    if (!phoneNumber.startsWith('0')) return false;
+    if (!RegExp(r'^[0-9]{8,15}$').hasMatch(phoneNumber)) return false;
+    return true;
   }
 }
 
@@ -175,15 +256,16 @@ class Contact {
 
 class ContactList extends StatefulWidget {
   final List<Contact> contacts;
+  final void Function(int) onEdit;
+  final void Function(int) onDelete;
 
-  ContactList({required this.contacts});
+  ContactList({required this.contacts, required this.onEdit, required this.onDelete});
 
   @override
   _ContactListState createState() => _ContactListState();
 }
 
 class _ContactListState extends State<ContactList> {
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -209,13 +291,13 @@ class _ContactListState extends State<ContactList> {
               IconButton(
                 icon: Icon(Icons.edit),
                 onPressed: () {
-                  print('Edit ${contact.name}');
+                  widget.onEdit(index);
                 },
               ),
               IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
-                  print('Delete ${contact.name}');
+                  widget.onDelete(index);
                 },
               ),
             ],
@@ -228,6 +310,14 @@ class _ContactListState extends State<ContactList> {
     );
   }
 }
+
+
+
+
+
+
+
+
 
 
 

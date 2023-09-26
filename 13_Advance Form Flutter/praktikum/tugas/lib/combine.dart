@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:open_file/open_file.dart';
 import 'package:intl/intl.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,23 +34,7 @@ class _ContactPageState extends State<ContactPage> {
   DateTime _selectedDate = DateTime.now();
   Color _selectedColor = Colors.orange;
   PlatformFile? _selectedFile;
-
-void addContact() {
-  setState(() {
-    final String name = nameController.text;
-    final String phone = phoneController.text;
-    contacts.add(Contact(name: name, phoneNumber: phone));
-    nameController.clear();
-    phoneController.clear();
-  });
-}
-
-
-void printContacts() {
-  print(contacts.map((contact) {
-    return {'title': contact.name, 'subtitle': contact.phoneNumber};
-  }).toList());
-}
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -95,39 +78,57 @@ void printContacts() {
               indent: 16.0,
               endIndent: 16.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  labelText: "Name",
-                  hintText: "Insert Your Name",
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  filled: true,
-                  fillColor: Color(0xFFEFE4FB),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: TextFormField(
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        labelText: "Name",
+                        hintText: "Insert Your Name",
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        filled: true,
+                        fillColor: Color(0xFFEFE4FB),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (!isValidName(value)) {
+                          return 'Nama Tidak Valid';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: TextFormField(
+                      controller: phoneController,
+                      decoration: InputDecoration(
+                        labelText: "Telephone",
+                        hintText: "+62 ...",
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        filled: true,
+                        fillColor: Color(0xFFEFE4FB),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (!isValidPhoneNumber(value)) {
+                          return 'Nomor Tidak Valid';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: TextFormField(
-                controller: phoneController,
-                decoration: InputDecoration(
-                  labelText: "Telephone",
-                  hintText: "+62 ...",
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  filled: true,
-                  fillColor: Color(0xFFEFE4FB),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                ),
-              ),
-            ),
-
             SizedBox(height: 20),
             Row(
               children: [
@@ -151,7 +152,6 @@ void printContacts() {
                 ),
               ],
             ),
-
             SizedBox(height: 20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,40 +165,39 @@ void printContacts() {
                 ),
                 SizedBox(height: 10),
                 Align(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('Pick Your Color'),
-                          content: BlockPicker(
-                            pickerColor: _selectedColor,
-                            onColorChanged: (color) {
-                              setState(() {
-                                _selectedColor = color;
-                              });
-                            },
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Pick Your Color'),
+                            content: BlockPicker(
+                              pickerColor: _selectedColor,
+                              onColorChanged: (color) {
+                                setState(() {
+                                  _selectedColor = color;
+                                });
                               },
-                              child: Text('Save'),
                             ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: Text('Pick Color'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Save'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Text('Pick Color'),
+                  ),
                 ),
-                )
               ],
             ),
-
             SizedBox(height: 20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,42 +217,37 @@ void printContacts() {
                 ),
               ],
             ),
-
             SizedBox(height: 20),
-ElevatedButton(
-  onPressed: () {
-    // Simpan data name, telephone, date, color, dan file ke dalam variabel
-    final String name = nameController.text;
-    final String phone = phoneController.text;
-    final String date = DateFormat('dd-MM-yyyy').format(_selectedDate);
-    final Color color = _selectedColor;
-    final PlatformFile? file = _selectedFile;
+            ElevatedButton(
+              onPressed: () {
+                final String name = nameController.text;
+                final String phone = phoneController.text;
+                final String date = DateFormat('dd-MM-yyyy').format(_selectedDate);
+                final Color color = _selectedColor;
+                final String? filePath = _selectedFile?.path;
 
-    // Lakukan sesuatu dengan data yang disimpan
-    print('Name: $name');
-    print('Telephone: $phone');
-    print('Date: $date');
-    print('Color: $color');
-    if (file != null) {
-      print('File: ${file.name}');
-    } else {
-      print('File: None');
-    }
+                print('Name: $name');
+                print('Telephone: $phone');
+                print('Date: $date');
+                print('Color: $color');
+                if (filePath != null) {
+                  print('File: $filePath');
+                } else {
+                  print('File: None');
+                }
 
-    // Tambahkan kontak ke dalam daftar kontak
-    addContact();
+                addContact();
 
-    // Bersihkan form field setelah data disimpan
-    nameController.clear();
-    phoneController.clear();
-    setState(() {
-      _selectedDate = DateTime.now();
-      _selectedColor = Colors.orange;
-      _selectedFile = null;
-    });
-  },
-  child: Text('Submit'),
-),
+                nameController.clear();
+                phoneController.clear();
+                setState(() {
+                  _selectedDate = DateTime.now();
+                  _selectedColor = Colors.orange;
+                  _selectedFile = null;
+                });
+              },
+              child: Text('Submit'),
+            ),
             SizedBox(height: 16),
             Text(
               "List Contacts",
@@ -262,24 +256,64 @@ ElevatedButton(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            ContactList(contacts: contacts), // Menampilkan daftar kontak
-          ], // Tambahkan tutup kurung kurawal untuk menutup children Column
+            ContactList(contacts: contacts),
+          ],
         ),
       ),
     );
+  }
+
+bool isValidName(String? value) {
+  if (value == null || value.isEmpty) return false;
+  final words = value.split(' ');
+  if (words.length < 2) return false;
+  for (final word in words) {
+    if (!RegExp(r'^[A-Z][a-z]*$').hasMatch(word)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool isValidPhoneNumber(String? value) {
+    if (value == null || value.isEmpty) return false;
+    return RegExp(r'^0[0-9]{7,14}$').hasMatch(value);
+  }
+
+  void addContact() {
+    setState(() {
+      final String name = nameController.text;
+      final String phone = phoneController.text;
+      final String date = DateFormat('dd-MM-yyyy').format(_selectedDate);
+      final Color color = _selectedColor;
+      final String? filePath = _selectedFile?.path;
+
+      contacts.add(Contact(
+        name: name,
+        phoneNumber: phone,
+        date: date,
+        color: color,
+        filePath: filePath,
+      ));
+    });
   }
 }
 
 class Contact {
   final String name;
   final String phoneNumber;
+  final String date;
+  final Color color;
+  final String? filePath;
 
   Contact({
     required this.name,
     required this.phoneNumber,
+    required this.date,
+    required this.color,
+    this.filePath,
   });
 }
-
 
 class ContactList extends StatefulWidget {
   final List<Contact> contacts;
@@ -290,14 +324,33 @@ class ContactList extends StatefulWidget {
   _ContactListState createState() => _ContactListState();
 }
 
-
 class _ContactListState extends State<ContactList> {
-
   void _deleteContact(Contact contact) {
-  setState(() {
-    widget.contacts.remove(contact);
-  });
-}
+    setState(() {
+      widget.contacts.remove(contact);
+    });
+  }
+
+  void _showContactDetail(BuildContext context, Contact contact) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Name: ${contact.name}'),
+              Text('Telephone: ${contact.phoneNumber}'),
+              Text('Date: ${contact.date}'),
+              Text('Color: ${contact.color.toString()}'),
+              if (contact.filePath != null) Text('File: ${contact.filePath}'),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -332,6 +385,12 @@ class _ContactListState extends State<ContactList> {
                 onPressed: () {
                   _deleteContact(contact);
                   print('Delete ${contact.name}');
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.visibility),
+                onPressed: () {
+                  _showContactDetail(context, contact);
                 },
               ),
             ],
