@@ -3,6 +3,7 @@ import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:praktikum/gallery.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,6 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/gallery':(context) => GalleryPage(),
+        '/detail':(context) => DetailPage(),
+      },
       theme: ThemeData(
         primaryColor: Color(0xFF6750A4),
       ),
@@ -35,6 +41,14 @@ class _ContactPageState extends State<ContactPage> {
   Color _selectedColor = Colors.orange;
   PlatformFile? _selectedFile;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  void _handleGalleryButtonTap() {
+    Navigator.pushNamed(context, '/gallery');
+  }
+
+  void _handleContactButtonTap() {
+    Navigator.popUntil(context, ModalRoute.withName('/'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +76,13 @@ class _ContactPageState extends State<ContactPage> {
             ListTile(
               title: Text('Contact'),
               onTap: () {
-                // Handle the Contact button tap here
+                _handleContactButtonTap();
               },
             ),
             ListTile(
               title: Text('Gallery'),
               onTap: () {
-                // Handle the Gallery button tap here
+                _handleGalleryButtonTap();
               },
             ),
           ],
