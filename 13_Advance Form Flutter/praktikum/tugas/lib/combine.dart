@@ -62,13 +62,11 @@ class _ContactPageState extends State<ContactPage> {
             ListTile(
               title: Text('Contact'),
               onTap: () {
-                // Handle the Contact button tap here
               },
             ),
             ListTile(
               title: Text('Gallery'),
               onTap: () {
-                // Handle the Gallery button tap here
               },
             ),
           ],
