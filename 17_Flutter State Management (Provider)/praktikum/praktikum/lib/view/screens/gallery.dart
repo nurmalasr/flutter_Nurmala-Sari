@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'bottomsheet.dart';
+import 'detail_gallery.dart';
 
 class GaleryPage extends StatefulWidget {
   const GaleryPage({Key? key}) : super(key: key);
@@ -13,6 +13,7 @@ class _GaleryPageState extends State<GaleryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFF6750A4),
         title: const Text('Image Gallery'),
       ),
       body: GridView.count(
@@ -31,56 +32,10 @@ class _GaleryPageState extends State<GaleryPage> {
                     padding: const EdgeInsets.only(top: 30),
                     child: Column(
                       children: <Widget>[
-                        Image.network('URL_GAMBAR_1', width: 200, height: 200),
-                        const Text('Gambar 1'),
-                        const Text('Apakah ingin melihat lebih detail'),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                        return const BottomPage();
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: const Text('Yes')),
-                            const SizedBox(
-                              width: 70,
-                            ),
-                            ElevatedButton(
-                                onPressed: () {}, child: const Text('No'))
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              child: Image.network('URL_GAMBAR_1'),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return Container(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: Column(
-                      children: <Widget>[
                         Image.network(
-                            'https://upload.wikimedia.org/wikipedia/commons/e/e5/Logo_Politeknik_Negeri_Batam.png',
+                            'https://www.littledayout.com/wp-content/uploads/05-studio-ghibi-free-image.jpg',
                             width: 200,
                             height: 200),
-                        const Text('Gambar 2'),
-                        const Text('Apakah ingin melihat lebih detail'),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -111,7 +66,53 @@ class _GaleryPageState extends State<GaleryPage> {
             child: Container(
               padding: const EdgeInsets.all(8),
               child: Image.network(
-                  'https://upload.wikimedia.org/wikipedia/commons/e/e5/Logo_Politeknik_Negeri_Batam.png'),
+                  'https://asset-2.tstatic.net/jogja/foto/bank/images/Meilin-Lee-atau-Mei-Tokoh-Utama-Film-Turning-Red.jpg'),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return Container(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Column(
+                      children: <Widget>[
+                        Image.network(
+                            'https://asset-2.tstatic.net/jogja/foto/bank/images/Meilin-Lee-atau-Mei-Tokoh-Utama-Film-Turning-Red.jpg',
+                            width: 200,
+                            height: 200),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                        return const BottomPage();
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: const Text('Yes')),
+                            const SizedBox(
+                              width: 70,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {}, child: const Text('No'))
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              child: Image.network(
+                  'https://2.bp.blogspot.com/-LGjRkGI_j6w/YUvzj81JQZI/AAAAAAAASLE/5W4hM5a8MFgbhcLWZTUHOlKE18DUmTcVQCLcBGAsYHQ/s640/Luca%2B%25282021%2529.png'),
             ),
           )
         ],

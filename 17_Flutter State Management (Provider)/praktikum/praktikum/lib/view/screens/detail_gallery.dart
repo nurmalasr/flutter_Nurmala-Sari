@@ -7,7 +7,7 @@ class BottomPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Halaman Detail'),
+        title: const Text('Image Detail'),
       ),
       body: const Text(''),
     );

@@ -3,11 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:praktikum/models/contact.dart';
-
-import 'galery.dart';
+import 'view/screens/gallery.dart';
 import 'package:provider/provider.dart';
 import 'package:praktikum/view_model/contact_provider.dart' as contact_store;
-import 'package:dio/dio.dart';
 
 void main() {
   runApp(
@@ -48,7 +46,6 @@ class _ContactPageState extends State<ContactPage> {
   DateTime _dueDate = DateTime.now();
   final currentDate = DateTime.now();
   Color _currentColor = const Color(0xFFE7E0EC);
-  PlatformFile? _selectedFile;
 
   String name = '';
   String phoneNumber = '';
@@ -59,7 +56,7 @@ class _ContactPageState extends State<ContactPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contact'),
-        backgroundColor: const Color(0xFF6200EE),
+        backgroundColor: const Color(0xFF6750A4),
         centerTitle: true,
       ),
       drawer: Drawer(
@@ -67,7 +64,7 @@ class _ContactPageState extends State<ContactPage> {
           children: <Widget>[
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Color(0xFF6750A4),
               ),
               child: Text('Drawer Header'),
             ),
@@ -200,8 +197,8 @@ class _ContactPageState extends State<ContactPage> {
                       Center(
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(_currentColor),
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color(0xFF6750A4)),
                           ),
                           child: const Text('Pick Color'),
                           onPressed: () {
@@ -237,23 +234,6 @@ class _ContactPageState extends State<ContactPage> {
                   const SizedBox(height: 12),
                 ],
               ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('File: ${_selectedFile?.name ?? 'None'}'),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      final result = await FilePicker.platform.pickFiles();
-                      if (result != null && result.files.isNotEmpty) {
-                        contactProvider.setSelectedFile(result.files.first);
-                      }
-                    },
-                    child: Text('Pick File'),
-                  ),
-                ],
-              ),
             ),
 
             ElevatedButton(
@@ -267,7 +247,6 @@ class _ContactPageState extends State<ContactPage> {
                   phoneNumber: phoneNumber,
                   date: _dueDate,
                   color: _currentColor,
-                  filePath: _selectedFile?.path ?? '',
                 ));
                 nameController.clear();
                 phoneNumberController.clear();
@@ -442,14 +421,14 @@ class _ContactPageState extends State<ContactPage> {
               Container(
                 height: 100,
                 width: double.infinity,
-                color: editedColor, // Display the current color
+                color: editedColor,
               ),
               const SizedBox(height: 10),
               Center(
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(
-                      editedColor,
+                      const Color(0xFF6750A4),
                     ),
                   ),
                   onPressed: () {
@@ -460,12 +439,10 @@ class _ContactPageState extends State<ContactPage> {
                           title: const Text('Pick your color'),
                           content: SingleChildScrollView(
                             child: ColorPicker(
-                              pickerColor:
-                                  editedColor, // Pass the current color
+                              pickerColor: editedColor,
                               onColorChanged: (color) {
                                 setState(() {
-                                  editedColor =
-                                      color; // Update the edited color
+                                  editedColor = color;
                                 });
                               },
                             ),
@@ -474,6 +451,9 @@ class _ContactPageState extends State<ContactPage> {
                             TextButton(
                               onPressed: () {
                                 Navigator.pop(context);
+                                setState(() {
+                                  _currentColor = editedColor;
+                                });
                               },
                               child: const Text('Save'),
                             ),
@@ -503,7 +483,6 @@ class _ContactPageState extends State<ContactPage> {
                         phoneNumber: phoneNumberController.text,
                         date: editedDate,
                         color: editedColor,
-                        filePath: _selectedFile?.path ?? '',
                       ));
                   Navigator.of(context).pop();
                 },
