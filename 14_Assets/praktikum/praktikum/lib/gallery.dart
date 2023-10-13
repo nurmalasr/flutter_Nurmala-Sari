@@ -46,7 +46,7 @@ class GalleryPage extends StatelessWidget {
               _showImageInBottomSheet(context, imageUrls[index]);
             },
             child: FractionallySizedBox(
-              widthFactor: 0.5, // Ganti fraksi sesuai dengan kebutuhan Anda
+              widthFactor: 0.5,
               heightFactor: 0.5,
               child: Image.network(
                 imageUrls[index],
@@ -64,13 +64,13 @@ class GalleryPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 300, 
+          height: 300,
           child: Column(
             children: [
               Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
-                height: 200, // ngatur tinggi gambar di bottom sheet
+                height: 200,
               ),
               SizedBox(height: 20),
               Row(
@@ -78,14 +78,14 @@ class GalleryPage extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop(); 
+                      Navigator.of(context).pop();
                       _showConfirmationDialog(context, imageUrl);
                     },
                     child: Text('Ya'),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop(); 
+                      Navigator.of(context).pop();
                     },
                     child: Text('Tidak'),
                   ),
@@ -108,13 +108,13 @@ class GalleryPage extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); 
+                Navigator.of(context).pop();
               },
               child: Text('Tidak'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); 
+                Navigator.of(context).pop();
                 Navigator.pushNamed(
                   context,
                   '/detail', // ke halaman detail
@@ -148,11 +148,3 @@ class DetailPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
