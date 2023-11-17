@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/gallery':(context) => GalleryPage(),
-        '/detail':(context) => DetailPage(),
+        '/gallery': (context) => GalleryPage(),
+        '/detail': (context) => DetailPage(),
       },
       theme: ThemeData(
         primaryColor: Color(0xFF6750A4),
@@ -128,7 +128,8 @@ class _ContactPageState extends State<ContactPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: TextFormField(
                       controller: nameController,
                       decoration: InputDecoration(
@@ -150,7 +151,8 @@ class _ContactPageState extends State<ContactPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: TextFormField(
                       controller: phoneController,
                       decoration: InputDecoration(
@@ -267,7 +269,8 @@ class _ContactPageState extends State<ContactPage> {
               onPressed: () {
                 final String name = nameController.text;
                 final String phone = phoneController.text;
-                final String date = DateFormat('dd-MM-yyyy').format(_selectedDate);
+                final String date =
+                    DateFormat('dd-MM-yyyy').format(_selectedDate);
                 final Color color = _selectedColor;
                 final String? filePath = _selectedFile?.path;
 
@@ -308,19 +311,19 @@ class _ContactPageState extends State<ContactPage> {
     );
   }
 
-bool isValidName(String? value) {
-  if (value == null || value.isEmpty) return false;
-  final words = value.split(' ');
-  if (words.length < 2) return false;
-  for (final word in words) {
-    if (!RegExp(r'^[A-Z][a-z]*$').hasMatch(word)) {
-      return false;
+  bool isValidName(String? value) {
+    if (value == null || value.isEmpty) return false;
+    final words = value.split(' ');
+    if (words.length < 2) return false;
+    for (final word in words) {
+      if (!RegExp(r'^[A-Z][a-z]*$').hasMatch(word)) {
+        return false;
+      }
     }
+    return true;
   }
-  return true;
-}
 
-bool isValidPhoneNumber(String? value) {
+  bool isValidPhoneNumber(String? value) {
     if (value == null || value.isEmpty) return false;
     return RegExp(r'^0[0-9]{7,14}$').hasMatch(value);
   }

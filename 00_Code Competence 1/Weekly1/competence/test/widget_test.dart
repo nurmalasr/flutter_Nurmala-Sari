@@ -1,30 +1,36 @@
-// // This is a basic Flutter widget test.
-// //
-// // To perform an interaction with a widget in your test, use the WidgetTester
-// // utility in the flutter_test package. For example, you can send tap and scroll
-// // gestures. You can also use WidgetTester to find child widgets in the widget
-// // tree, read text, and verify that the values of widget properties are correct.
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:competence/main.dart';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
+void main() {
+  testWidgets('UI Test', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
 
-// import 'package:competence/main.dart';
+    // Test the presence of key UI elements
+    expect(find.text("Welcome to Mala's page!"), findsOneWidget);
+    expect(find.text('Contact Us'), findsOneWidget);
+    expect(find.text('First Name'), findsOneWidget);
+    expect(find.text('Last Name'), findsOneWidget);
+    expect(find.text('Email'), findsOneWidget);
+    expect(find.text('What can we help you with?'), findsOneWidget);
+    expect(find.byType(ElevatedButton), findsOneWidget);
 
-// void main() {
-//   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-//     // Build our app and trigger a frame.
-//     await tester.pumpWidget(const MyApp());
+    // Simulate user input
+    await tester.enterText(find.byType(TextField).first, 'John');
+    await tester.enterText(find.byType(TextField).at(1), 'Doe');
+    await tester.enterText(
+        find.byType(TextField).at(2), 'john.doe@example.com');
+    await tester.enterText(find.byType(TextField).at(3), 'Inquiry message');
 
-//     // Verify that our counter starts at 0.
-//     expect(find.text('0'), findsOneWidget);
-//     expect(find.text('1'), findsNothing);
+    // Trigger the submit button
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
 
-//     // Tap the '+' icon and trigger a frame.
-//     await tester.tap(find.byIcon(Icons.add));
-//     await tester.pump();
-
-//     // Verify that our counter has incremented.
-//     expect(find.text('0'), findsNothing);
-//     expect(find.text('1'), findsOneWidget);
-//   });
-// }
+    // Verify that the data dialog appears with the correct information
+    expect(find.text('Form Data'), findsOneWidget);
+    expect(find.text('First Name: John'), findsOneWidget);
+    expect(find.text('Last Name: Doe'), findsOneWidget);
+    expect(find.text('Email: john.doe@example.com'), findsOneWidget);
+    expect(find.text('Inquiry: Inquiry message'), findsOneWidget);
+  });
+}
